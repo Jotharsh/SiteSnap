@@ -1,4 +1,4 @@
-import { h, toast, sheet, confirmDialog, formatDate, plural, urlTracker } from '../ui.js';
+import { h, toast, sheet, confirmDialog, formatDate, plural, urlTracker, icon } from '../ui.js';
 import { listVisits, countEntries, firstEntry, deleteVisit, duplicateVisit } from '../db.js';
 import { installMode, promptInstall, dismissInstall, onInstallChange } from '../install.js';
 
@@ -50,7 +50,7 @@ export async function home(screen, _params, { go }) {
     for (const { visit, count, first } of shown) {
       const thumb = first?.thumb
         ? h('img', { class: 'thumb', src: urls.url(first.thumb), alt: '' })
-        : h('div', { class: 'thumb', 'aria-hidden': 'true' }, '📷');
+        : h('div', { class: 'thumb', 'aria-hidden': 'true' }, icon('camera', 24));
       list.append(h('div', { class: 'card visit', role: 'listitem' },
         h('button', { class: 'open', onclick: () => go(`#/visit/${visit.id}`) },
           thumb,
@@ -58,7 +58,7 @@ export async function home(screen, _params, { go }) {
             h('span', { class: 'title' }, visit.project), h('br'),
             h('span', { class: 'muted small' }, [visit.location, formatDate(visit.date)].filter(Boolean).join(' · ')), h('br'),
             h('span', { class: 'muted small' }, plural(count, 'photo')))),
-        h('button', { class: 'btn menu', 'aria-label': `Options for ${visit.project}`, onclick: () => options(visit) }, '⋯')));
+        h('button', { class: 'btn menu', 'aria-label': `Options for ${visit.project}`, onclick: () => options(visit) }, icon('dots', 24))));
     }
   }
 
@@ -100,12 +100,12 @@ export async function home(screen, _params, { go }) {
   }
 
   screen.append(
-    h('div', { class: 'topbar' }, h('h1', {}, 'SiteSnap'), h('a', { class: 'btn', href: '#/more' }, 'More')),
+    h('div', { class: 'topbar home' }, h('img', { class: 'logo', src: 'icons/icon-192.png', alt: '', width: 36, height: 36 }), h('h1', {}, 'SiteSnap'), h('a', { class: 'btn ghost', href: '#/more' }, 'More')),
     h('div', { class: 'stack' },
       banner.node,
-      h('a', { class: 'btn primary big', href: '#/new' }, h('span', { class: 'icon', 'aria-hidden': 'true' }, '＋'), 'Start new site visit'),
-      summaries.length > 0 && h('label', { class: 'field' }, h('span', {}, 'Search past visits'), search),
-      summaries.length > 0 && h('h2', {}, 'Past visits'),
+      h('a', { class: 'btn primary big', href: '#/new' }, icon('plus', 24), 'Start new site visit'),
+      summaries.length > 0 && h('label', { class: 'field' }, h('span', { class: 'sr-only' }, 'Search past visits'), search),
+      summaries.length > 0 && h('h2', { class: 'section' }, 'Past visits'),
       list),
     h('p', { class: 'privacy' }, 'Everything stays on this device. No account, no tracking.'),
     h('p', { class: 'privacy' }, 'If you do not use the app for a long time, your browser may clear saved visits. Back up important ones from the visit screen (More).'));

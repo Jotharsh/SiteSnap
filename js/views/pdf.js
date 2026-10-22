@@ -1,4 +1,4 @@
-import { h, toast, plural } from '../ui.js';
+import { h, toast, plural, backLabel, icon } from '../ui.js';
 import { getVisit, listEntries, getSettings, patchVisit } from '../db.js';
 
 const LAYOUTS = [[1, 'One per page'], [2, 'Two per page'], [4, 'Four per page']];
@@ -14,7 +14,7 @@ export async function pdfScreen(screen, [id], { go }) {
   let observer = null;
   let disposed = false;
 
-  const back = (href, label = '← Back') => h('a', { class: 'btn', href }, label);
+  const back = (href, label = 'Back') => h('a', { class: 'btn ghost back', href }, backLabel(label));
 
   if (!entries.length) {
     screen.append(
@@ -122,14 +122,14 @@ export async function pdfScreen(screen, [id], { go }) {
 
     const sizeText = blob.size > 1e6 ? `${(blob.size / 1e6).toFixed(1)} MB` : `${Math.max(1, Math.round(blob.size / 1000))} KB`;
     screen.replaceChildren(
-      h('div', { class: 'topbar' }, back(`#/visit/${id}`, '← Visit'), h('h1', {}, 'Your report')),
+      h('div', { class: 'topbar' }, back(`#/visit/${id}`, 'Visit'), h('h1', {}, 'Your report')),
       h('div', { class: 'stack' },
         h('p', { id: 'ready' }, h('strong', {}, 'Ready. '), `${plural(pageCount, 'page')}, ${sizeText}. Scroll to check every page.`),
         h('button', { class: 'btn block', onclick: showOptions }, 'Change options and make it again'),
         h('div', { class: 'pages' }, pages.map((p) => p.box))),
       h('div', { class: 'bottombar two' },
-        canShare && h('button', { class: 'btn primary big', id: 'share', onclick: share }, 'Share'),
-        h('button', { class: `btn big ${canShare ? '' : 'primary'}`, id: 'download', onclick: download }, 'Download')));
+        canShare && h('button', { class: 'btn primary big', id: 'share', onclick: share }, icon('share', 22), 'Share'),
+        h('button', { class: `btn big ${canShare ? '' : 'primary'}`, id: 'download', onclick: download }, icon('download', 22), 'Download')));
     pages.forEach((p) => observer.observe(p.box));
     window.addEventListener('resize', repaint);
     function repaint() { pages.filter((p) => p.painted).forEach(paint); }

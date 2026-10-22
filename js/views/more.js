@@ -1,9 +1,9 @@
-import { h, toast } from '../ui.js';
+import { h, toast, backLabel } from '../ui.js';
 import { importVisit, BackupError } from '../backup.js';
 import { APP_VERSION } from '../config.js';
 
 const bar = (title, back = '#/') =>
-  h('div', { class: 'topbar' }, h('a', { class: 'btn', href: back }, '← Back'), h('h1', {}, title));
+  h('div', { class: 'topbar' }, h('a', { class: 'btn ghost back', href: back }, backLabel('Back')), h('h1', {}, title));
 
 export function more(screen, _params, { go }) {
   const input = h('input', {

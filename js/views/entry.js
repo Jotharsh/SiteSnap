@@ -1,4 +1,4 @@
-import { h, toast, formatTime, urlTracker, confirmDialog } from '../ui.js';
+import { h, toast, formatTime, urlTracker, confirmDialog, backLabel, icon } from '../ui.js';
 import { getEntry, saveEntry, deleteEntry, listEntries } from '../db.js';
 import { TAGS } from '../config.js';
 import { addPhotos, photoButton } from '../capture.js';
@@ -49,10 +49,10 @@ export async function entryScreen(screen, [visitId, entryId], { go }) {
   // Optional microphone: only shown where the browser can do speech recognition.
   const dictation = createDictation({
     onText: (text) => { comment.value = `${comment.value}${comment.value && !/\s$/.test(comment.value) ? ' ' : ''}${text}`; dirty = true; flush(); },
-    onState: (on) => { mic.setAttribute('aria-pressed', String(on)); mic.textContent = on ? '⏹ Stop listening' : '🎤 Speak instead of typing'; },
+    onState: (on) => { mic.setAttribute('aria-pressed', String(on)); mic.replaceChildren(icon(on ? 'stop' : 'mic', 20), on ? 'Stop listening' : 'Speak instead of typing'); },
     onProblem: (message) => toast(message, 6000),
   });
-  const mic = dictation && h('button', { class: 'btn block', type: 'button', 'aria-pressed': 'false', onclick: () => dictation.toggle() }, '🎤 Speak instead of typing');
+  const mic = dictation && h('button', { class: 'btn block', type: 'button', 'aria-pressed': 'false', onclick: () => dictation.toggle() }, icon('mic', 20), 'Speak instead of typing');
 
   async function nextPhoto(files) {
     await flush();
@@ -72,7 +72,7 @@ export async function entryScreen(screen, [visitId, entryId], { go }) {
 
   screen.append(
     h('div', { class: 'topbar' },
-      h('a', { class: 'btn', href: `#/visit/${visitId}`, onclick: () => flush() }, '← Done'),
+      h('a', { class: 'btn ghost back', href: `#/visit/${visitId}`, onclick: () => flush() }, backLabel('Done')),
       h('h1', {}, `Photo ${number}`)),
     h('div', { class: 'stack' },
       h('img', { class: 'bigphoto', src: urls.url(entry.photo), alt: `Photo ${number}, taken at ${formatTime(entry.createdAt)}` }),
@@ -81,7 +81,7 @@ export async function entryScreen(screen, [visitId, entryId], { go }) {
       h('div', { class: 'field' }, h('span', {}, 'Label (optional)'), h('div', { class: 'tags', role: 'group', 'aria-label': 'Label' }, tagButtons)),
       h('div', { class: 'photo-actions' },
         h('a', { class: 'btn primary big', href: `#/visit/${visitId}`, onclick: () => flush() }, 'Done'),
-        photoButton({ label: 'Take next photo', icon: '📷', camera: true, onFiles: nextPhoto })),
+        photoButton({ label: 'Take next photo', icon: 'camera', camera: true, onFiles: nextPhoto })),
       h('details', {}, h('summary', { class: 'btn' }, 'More'),
         h('div', { class: 'stack', style: 'margin-top:.75rem' }, h('button', { class: 'btn danger block', type: 'button', onclick: remove }, 'Delete this photo')))));
 

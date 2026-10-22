@@ -1,5 +1,5 @@
 // Offline support. Change VERSION whenever any file changes, so phones fetch the new files and drop the old cache.
-const VERSION = 'v1';
+const VERSION = 'v2';
 const CACHE = `sitesnap-${VERSION}`;
 
 const SHELL = [

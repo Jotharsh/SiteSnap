@@ -1,4 +1,4 @@
-import { h, toast, formatDate, formatTime, plural, urlTracker, confirmDialog, sheet } from '../ui.js';
+import { h, toast, formatDate, formatTime, plural, urlTracker, confirmDialog, sheet, backLabel, icon } from '../ui.js';
 import { getVisit, listEntries, deleteVisit, reorderEntries } from '../db.js';
 import { addPhotos, photoButton } from '../capture.js';
 import { tagLabel } from '../config.js';
@@ -111,16 +111,16 @@ export async function visitScreen(screen, [id], { go }) {
 
   screen.append(
     h('div', { class: 'topbar' },
-      h('a', { class: 'btn', href: '#/' }, '← Home'),
+      h('a', { class: 'btn ghost back', href: '#/' }, backLabel('Home')),
       h('h1', {}, visit.project),
-      h('button', { class: 'btn', onclick: more }, 'More')),
+      h('button', { class: 'btn ghost', onclick: more }, 'More')),
     h('div', { class: 'stack' },
       h('p', { class: 'muted' }, [visit.location, formatDate(visit.date), visit.preparedBy && `by ${visit.preparedBy}`].filter(Boolean).join(' · ')),
       h('div', { class: 'photo-actions' },
-        photoButton({ label: 'Take photo', icon: '📷', camera: true, primary: true, onFiles: (f) => handleFiles(f, false) }),
-        photoButton({ label: 'Choose from gallery', icon: '🖼', onFiles: (f) => handleFiles(f, true) })),
+        photoButton({ label: 'Take photo', icon: 'camera', camera: true, primary: true, onFiles: (f) => handleFiles(f, false) }),
+        photoButton({ label: 'Choose from gallery', icon: 'image', onFiles: (f) => handleFiles(f, true) })),
       status,
-      h('div', { class: 'row' }, h('h2', { class: 'grow' }, 'Photos'), reorderButton),
+      h('div', { class: 'row' }, h('h2', { class: 'grow section' }, 'Photos'), reorderButton),
       list),
     h('div', { class: 'bottombar' }, pdfButton));
   draw();

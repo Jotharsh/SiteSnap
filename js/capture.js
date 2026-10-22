@@ -1,4 +1,4 @@
-import { h } from './ui.js';
+import { h, icon as svgIcon } from './ui.js';
 import { processPhoto } from './image.js';
 import { appendEntry, requestPersistence } from './db.js';
 
@@ -34,5 +34,5 @@ export function photoButton({ label, icon, camera = false, primary = false, onFi
     onchange: () => { const files = [...input.files]; input.value = ''; if (files.length) onFiles(files); },
   });
   return h('label', { class: `btn big ${primary ? 'primary' : ''}` },
-    h('span', { class: 'icon', 'aria-hidden': 'true' }, icon), label, input);
+    svgIcon(icon, 24), label, input);
 }

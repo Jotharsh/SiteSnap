@@ -1,4 +1,4 @@
-import { h, todayISO } from '../ui.js';
+import { h, todayISO, backLabel } from '../ui.js';
 import { getSettings, getVisit, saveVisit, setSettings, newId } from '../db.js';
 
 const field = (label, control, hint) => h('label', { class: 'field' }, h('span', {}, label), control, hint && h('small', {}, hint));
@@ -35,7 +35,7 @@ async function form(screen, { visit, go }) {
 
   screen.append(
     h('div', { class: 'topbar' },
-      h('a', { class: 'btn', href: editing ? `#/visit/${visit.id}` : '#/' }, '← Back'),
+      h('a', { class: 'btn ghost back', href: editing ? `#/visit/${visit.id}` : '#/' }, backLabel('Back')),
       h('h1', {}, editing ? 'Visit details' : 'New site visit')),
     h('form', { class: 'stack', onsubmit: submit, novalidate: true },
       h('div', {}, field(h('span', {}, 'Project name ', h('span', { class: 'req', 'aria-hidden': 'true' }, '(required)')), project), error),

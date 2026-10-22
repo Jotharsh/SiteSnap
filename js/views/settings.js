@@ -1,4 +1,4 @@
-import { h, toast, urlTracker } from '../ui.js';
+import { h, toast, urlTracker, backLabel } from '../ui.js';
 import { getSettings, setSettings, requestPersistence } from '../db.js';
 import { processBrandImage } from '../image.js';
 import { applyAccent } from '../theme.js';
@@ -100,7 +100,7 @@ export async function settingsScreen(screen) {
   }
 
   screen.append(
-    h('div', { class: 'topbar' }, h('a', { class: 'btn', href: '#/more' }, '← Back'), h('h1', {}, 'Settings')),
+    h('div', { class: 'topbar' }, h('a', { class: 'btn ghost back', href: '#/more' }, backLabel('Back')), h('h1', {}, 'Settings')),
     h('div', { class: 'stack' },
       status,
       h('div', { class: 'card stack' }, h('h2', {}, 'About you'),
