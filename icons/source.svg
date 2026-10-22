@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <!-- Full-bleed square (the phone applies its own rounded corners). All artwork stays inside the central 80% so it survives "maskable" cropping. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F97316"/><stop offset="1" stop-color="#B93A0B"/></linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <rect x="392" y="296" width="240" height="84" rx="30" fill="#FFFFFF"/>
+  <rect x="232" y="350" width="560" height="394" rx="64" fill="#FFFFFF"/>
+  <circle cx="512" cy="556" r="136" fill="#B93A0B"/>
+  <circle cx="512" cy="556" r="86" fill="#FFFFFF"/>
+  <circle cx="512" cy="556" r="40" fill="#F97316"/>
+  <circle cx="722" cy="424" r="22" fill="#F97316"/>
+  <circle cx="742" cy="722" r="102" fill="#15803D" stroke="#FFFFFF" stroke-width="24"/>
+  <path d="M696 722l34 36 62-72" fill="none" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
